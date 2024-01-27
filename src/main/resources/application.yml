@@ -1,7 +1,7 @@
 #konfigurujemy połączenie z bazą danych
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:54329/student
+    url: jdbc:postgresql://localhost:54328/student
     username: student
     password: student
   jpa:

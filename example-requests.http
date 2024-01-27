@@ -1,5 +1,5 @@
 ###
-POST http://localhost:8080/students
+POST http://localhost:8081/students
 Content-Type: application/json
 
 {
@@ -9,8 +9,8 @@ Content-Type: application/json
 
 ###
 #Tu id do ścieżki pobieramy z bazy danych
-GET http://localhost:8080/students/{{id}}}
+GET http://localhost:8081/students/{{id}}}
 
 ###
-DELETE http://localhost:8080/students?name=Karola
+DELETE http://localhost:8081/students?name=Karola
 

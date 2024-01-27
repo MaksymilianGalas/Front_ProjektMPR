@@ -1,12 +1,14 @@
 package com.example.students.frontend;
 
+
+
+import com.example.students.resource.CreateStudent;
 import com.example.students.service.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/students-page")
@@ -19,9 +21,8 @@ public class StudentsPageController {
     }
 
     @GetMapping
-    public String getStudentsPage(String name, Model model){
-        model.addAttribute("name", name);
-        var students = studentService.findAll();
+    public String getStudentsPage(Model model) {
+        var students = studentService.getAll();
         model.addAttribute("students", students);
         return "index";
     }
@@ -33,8 +34,31 @@ public class StudentsPageController {
     }
 
     @PostMapping("/add")
-    public String addStudentAndRedirectToMainPage(@ModelAttribute CreateStudent createStudent){
+    public String addStudentAndRedirectToMainPage(@ModelAttribute CreateStudent createStudent) {
         studentService.createStudent(createStudent);
         return "redirect:/students-page";
     }
+
+    @GetMapping("/edit/{id}")
+    public String editPage(Model model, @PathVariable UUID id) {
+        StudentDto student = studentService.getStudentById(id);
+        model.addAttribute("student", student);
+        return "updatePage";
+    }
+
+    @PutMapping("/edit-student/{id}")
+    public String editStudent(@ModelAttribute("editStudent") StudentDto student, @PathVariable UUID id) {
+        studentService.updateStudent(id, student);
+        return "updateStudent";
+    }
+
+
+
+    @GetMapping("/search-by-email")
+    public String searchStudentsByEmail(String email, Model model) {
+        var students = studentService.getStudentsByEmail(email);
+        model.addAttribute("students", students);
+        return "index";
+    }
+
 }

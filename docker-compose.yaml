@@ -8,4 +8,4 @@ services:
       POSTGRES_USER: student
       POSTGRES_DATABASE: student
     ports:
-      - "54329:5432"
+      - "54328:5432"
