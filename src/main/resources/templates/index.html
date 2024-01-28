@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+    <link rel="stylesheet" th:href="@{style.css}"/>
+</head>
+<body>
+<a th:href="@{/students-page/add}">Dodaj Studenta</a>
+<table>
+    <li th:each="student : ${students}">
+        <a th:href="@{'/students-page/edit/' + ${student.id}}">Student: <span th:text="${student.name + ' index:' + student.index}"></span></a>
+    </li>
+</table>
+
+<footer th:insert="~{footer}"></footer>
+</body>
+</html>

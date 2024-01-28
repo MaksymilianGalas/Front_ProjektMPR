@@ -1,0 +1,14 @@
+#konfigurujemy połączenie z bazą danych
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:54328/student
+    username: student
+    password: student
+  jpa:
+    show-sql: true # ten parametr pozwala nam na wyświetlanie zapytań sql wykonanych przez naszą aplilkację w logach
+    hibernate:
+      ddl-auto: none # ten parametr odpowiada za sposób generowania struktury bazy danych
+  application:
+    name: students
+server:
+  port: 8081

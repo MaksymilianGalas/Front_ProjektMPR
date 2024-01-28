@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Students</title>
+</head>
+<body>
+<h2>Search Students</h2>
+<form action="/students-page/search-by-email" method="get">
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email">
+    <button type="submit">Search by Email</button>
+</form>
+
+<form action="/students-page/search-by-phone-number" method="get">
+    <label for="phoneNumber">Phone Number:</label>
+    <input type="text" id="phoneNumber" name="phoneNumber">
+    <button type="submit">Search by Phone Number</button>
+</form>
+
+<ul>
+    <li th:each="student : ${students}">
+        <span th:text="${student.name}"></span> - <span th:text="${student.email}"></span> - <span th:text="${student.phoneNumber}"></span>
+    </li>
+</ul>
+</body>
+</html>
