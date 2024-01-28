@@ -1,13 +1,16 @@
 package com.example.students.frontend;
 
 import com.example.students.resource.StudentUnit;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
 
-//@Getter
+@Getter
 @Setter
+@AllArgsConstructor
 public class StudentDto {
 
     private UUID id;
@@ -20,11 +23,8 @@ public class StudentDto {
     public StudentDto() {
     }
 
-    public StudentDto(UUID id, String name, StudentUnit unit, Long index) {
-        this.id = id;
-        this.name = name;
-        this.unit = unit;
-        this.index = index;
+    public StudentDto(UUID id) {
+        this.id=id;
     }
 
     public void setId(UUID id) {

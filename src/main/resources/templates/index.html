@@ -9,7 +9,7 @@
 <a th:href="@{/students-page/add}">Dodaj Studenta</a>
 <table>
     <li th:each="student : ${students}">
-        <a th:href="@{'/students-page/edit-student/' + ${student.id}}">Student: <span th:text="${student.name + ' index:' + student.index}"></span></a>
+        <a th:href="@{'/students-page/edit/' + ${student.id}}">Student: <span th:text="${student.name + ' index:' + student.index}"></span></a>
     </li>
 </table>
 

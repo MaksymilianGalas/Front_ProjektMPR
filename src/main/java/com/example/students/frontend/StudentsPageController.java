@@ -41,24 +41,35 @@ public class StudentsPageController {
 
     @GetMapping("/edit/{id}")
     public String editPage(Model model, @PathVariable UUID id) {
-        StudentDto student = studentService.getStudentById(id);
-        model.addAttribute("student", student);
-        return "updatePage";
-    }
-
-    @PutMapping("/edit-student/{id}")
-    public String editStudent(@ModelAttribute("editStudent") StudentDto student, @PathVariable UUID id) {
-        studentService.updateStudent(id, student);
+        model.addAttribute("student", new StudentDto(id));
         return "updateStudent";
     }
+    @PostMapping("/edit/{id}")
+    public String editStudent(@ModelAttribute StudentDto updateStudent, @PathVariable UUID id) {
+        studentService.updateStudent(id, updateStudent);
+        return "redirect:/students-page";
+    }
 
+    @PutMapping("/edit/{id}")
+    public String editStudentPut(@ModelAttribute StudentDto updateStudent, @PathVariable UUID id) {
+        studentService.updateStudent(id, updateStudent);
+        return "redirect:/students-page";
+    }
+
+
+    @GetMapping("/search-all")
+    public String searchAll(Model model) {
+        var students = studentService.getAll();
+        model.addAttribute("students", students);
+        return "index";
+    }
 
 
     @GetMapping("/search-by-email")
     public String searchStudentsByEmail(String email, Model model) {
         var students = studentService.getStudentsByEmail(email);
         model.addAttribute("students", students);
-        return "index";
+        return "indexes";
     }
 
 }

@@ -4,13 +4,8 @@ import com.example.students.exception.ResourceNotFoundException;
 import com.example.students.frontend.StudentDto;
 import com.example.students.resource.CreateStudent;
 import lombok.extern.java.Log;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
@@ -24,14 +19,10 @@ import java.util.UUID;
 public class StudentService {
     private static final String API_URL = "http://localhost:8080/students";
     private final WebClient webClient;
-    private final RestTemplate restTemplate;
-    private JdbcTemplate jdbcTemplate;
 
 
-    public StudentService(WebClient webClient, RestTemplate restTemplate, JdbcTemplate jdbcTemplate) {
+    public StudentService(WebClient webClient) {
         this.webClient = webClient;
-        this.restTemplate = restTemplate;
-        this.jdbcTemplate = jdbcTemplate;
     }
 
     public void createStudent(CreateStudent createStudent) {
@@ -43,11 +34,13 @@ public class StudentService {
         log.info("Response returned");
     }
 
-    public ResponseEntity<Void> updateStudent(UUID id, StudentDto studentDto) {
-        String url = String.format("%s/%s", API_URL, id);
-        HttpEntity<StudentDto> requestEntity = new HttpEntity<>(studentDto);
-        restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
-        return ResponseEntity.noContent().build();
+    public void updateStudent(UUID id, StudentDto studentDto) {
+        webClient.put()
+                .uri(API_URL + "/" + id)
+                .bodyValue(studentDto)
+                .retrieve()
+                .toBodilessEntity()
+                .subscribe(response -> log.info("Student updated properly"));
     }
 
     public void deleteByName(String name) {
