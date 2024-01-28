@@ -49,7 +49,12 @@ public class StudentsPageController {
         studentService.updateStudent(id, updateStudent);
         return "redirect:/students-page";
     }
-
+    @GetMapping("/search-by-phone")
+    public String searchStudentsByPhoneNumber(@RequestParam String phoneNumber, Model model) {
+        var students = studentService.getStudentsByPhoneNumber(phoneNumber);
+        model.addAttribute("students", students);
+        return "indexes";
+    }
 
 
 

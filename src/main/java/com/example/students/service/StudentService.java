@@ -63,6 +63,14 @@ public class StudentService {
         catch (WebClientResponseException e){ throw new ResourceNotFoundException("Student with id " + id + " not found"); }
         catch (HttpServerErrorException e){ throw new RuntimeException("Error during sending request"); }
     }
+    public List<StudentDto> getStudentsByPhoneNumber(String phoneNumber) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder.queryParam("phoneNumber", phoneNumber).build())
+                .retrieve()
+                .bodyToFlux(StudentDto.class)
+                .collectList()
+                .block(Duration.of(10, ChronoUnit.SECONDS));
+    }
 
     public List<StudentDto> getStudentsByEmail(String email) {
         try {
