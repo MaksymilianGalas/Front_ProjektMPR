@@ -5,25 +5,31 @@
     <title>Update Student</title>
 </head>
 <body>
-<form method="post" th:action="@{'/students-page/edit/' + ${student.id}}" th:object="${student}">
-    <input type="hidden" id="studentId" name="studentId" th:value="${student.id}">
-    <label for="name">First Name:</label>
-    <input type="text" id="name" name="name" th:value="${student.name}">
-    <br>
-    <label for="unit">Unit Name:</label>
-    <select id="unit" name="unit" th:field="*{unit}">
-        <option th:each="studentUnit: ${T(com.example.students.resource.StudentUnit).values()}"
-                th:value="${studentUnit}" th:text="${studentUnit}">
-        </option>
-    </select>
-    <br>
-    <label for="email">Email:</label>
-    <input type="text" id="email" name="email" th:value="${student.email}">
-    <br>
-    <label for="phoneNumber">Phone Number:</label>
-    <input type="text" id="phoneNumber" name="phoneNumber" th:value="${student.phoneNumber}">
-    <br>
-    <button type="submit">Update</button>
-</form>
+<th:block th:if="${student != null}">
+    <form method="post" th:action="@{'/students-page/edit/' + ${student.id}}" th:object="${student}">
+        <input type="hidden" id="studentId" name="studentId" th:value="${student.id}">
+        <label for="name">First Name:</label>
+        <input type="text" id="name" name="name" th:value="${student.name}">
+        <br>
+        <label for="unit">Unit Name:</label>
+        <select id="unit" name="unit" th:field="*{unit}">
+            <option th:each="studentUnit: ${T(com.example.students.resource.StudentUnit).values()}"
+                    th:value="${studentUnit}" th:text="${studentUnit}">
+            </option>
+        </select>
+        <br>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" th:value="${student.email}">
+        <br>
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" th:value="${student.phoneNumber}">
+        <br>
+        <button type="submit">Update</button>
+    </form>
+</th:block>
+
+<th:block th:if="${student == null}">
+    <p>Nie znaleziono studenta</p>
+</th:block>
 </body>
 </html>

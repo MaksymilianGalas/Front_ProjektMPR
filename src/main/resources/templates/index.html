@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Students</title>
@@ -7,12 +7,30 @@
 </head>
 <body>
 <a th:href="@{/students-page/add}">Dodaj Studenta</a>
-<table>
-    <li th:each="student : ${students}">
-        <a th:href="@{'/students-page/edit/' + ${student.id}}">Student: <span th:text="${student.name + ' index:' + student.index}"></span></a>
-    </li>
-</table>
 
-<footer th:insert="~{footer}"></footer>
+<div th:if="${not #lists.isEmpty(students)}">
+    <table>
+        <tr th:each="student : ${students}">
+            <td>
+                <a th:href="@{'/students-page/edit/' + ${student.id}}">
+                    Student: <span th:text="${student.name + ' index:' + student.index}"></span>
+                </a>
+                <span th:if="${student.email}">, Email: <span th:text="${student.email}"></span></span>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div th:if="${#lists.isEmpty(students)}">
+    <p>Brak studentów.</p>
+</div>
+
+<div>
+    <form th:action="@{/students-page/search-by-email}" method="post">
+        <label for="email">Search by Email:</label>
+        <input type="text" id="email" name="email"/>
+        <button type="submit">Search</button>
+    </form>
+</div>
 </body>
 </html>

@@ -2,12 +2,14 @@ package com.example.students.frontend;
 
 
 
+import com.example.students.exception.ResourceNotFoundException;
 import com.example.students.resource.CreateStudent;
 import com.example.students.service.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -49,12 +51,6 @@ public class StudentsPageController {
         studentService.updateStudent(id, updateStudent);
         return "redirect:/students-page";
     }
-    @GetMapping("/search-by-phone")
-    public String searchStudentsByPhoneNumber(@RequestParam String phoneNumber, Model model) {
-        var students = studentService.getStudentsByPhoneNumber(phoneNumber);
-        model.addAttribute("students", students);
-        return "indexes";
-    }
 
 
 
@@ -66,11 +62,17 @@ public class StudentsPageController {
     }
 
 
-    @GetMapping("/search-by-email")
-    public String searchStudentsByEmail(String email, Model model) {
-        var students = studentService.getStudentsByEmail(email);
-        model.addAttribute("students", students);
-        return "indexes";
+
+    @PostMapping("/search-by-email")
+    public String searchStudentsByEmail(@RequestParam String email, Model model) {
+        if (email != null) {
+            List<StudentDto> students = studentService.getStudentsByEmail(email);
+            model.addAttribute("students", students);
+            return "searchStudents";
+        } else {
+            model.addAttribute("errorMessage", "Please provide a valid email for searching.");
+            return "searchStudents";
+        }
     }
 
 }

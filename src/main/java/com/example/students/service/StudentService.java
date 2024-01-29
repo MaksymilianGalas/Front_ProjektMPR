@@ -75,7 +75,7 @@ public class StudentService {
     public List<StudentDto> getStudentsByEmail(String email) {
         try {
             return webClient.get()
-                    .uri(uriBuilder -> uriBuilder.queryParam("email", email).build())
+                    .uri(builder -> builder.path("/search-by-email/{email}").build(email))
                     .retrieve()
                     .bodyToFlux(StudentDto.class)
                     .collectList()
@@ -84,6 +84,7 @@ public class StudentService {
             throw new ResourceNotFoundException("Error during sending request");
         }
     }
+
 
     public List<StudentDto> getAll() {
         return webClient.get()
